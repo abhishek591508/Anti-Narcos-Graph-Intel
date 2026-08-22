@@ -1,3 +1,17 @@
+# Achievement
+Got [**position 5**](https://lnkd.in/p/gPY5xhZR) World-Wide🏆 among top 50 finalist teams shortlisted **among 500+ total teams and 2000+ developers Globally** in an international Hackathon [**Infinity Hack 2026 | By HackerRank Campus Crew**](https://hrcc-infinityhacks.vercel.app/)
+
+**Demonstration Video [▸]** : https://youtu.be/tEvVKIYqxZY?si=e7tTpo2EG-Nj-N64 \
+**Track:** Anti Narcotics\
+**Project:** Anti-Narcos-Graph-Intel\
+**Team Name:** The Conflicters
+```
+    Team Members:   1. Abhishek Kumar (me)
+                    2. Kamal Kumar
+                    3. Ikramul Hasan
+                    4. Waseem Akram
+                    5. Deepika bhagat
+```
 # Narco-Graph Intel
 
 Graph-RAG anti-narcotics intelligence platform with adaptive OSINT crawling.
@@ -9,7 +23,7 @@ vector retrieval plus constrained graph traversal, flags suspicious network
 patterns, and — when it does not have enough confident evidence — searches and
 crawls the public web to fill the gap before answering again.
 
-**Team:** The Conflicters — Kamal Kumar, Waseem Akram, Abhishek Kumar, Ikramul Hasan, Deepika Bhagat
+**Team:** The Conflicters — Kamal Kumar, Waseem Akram, [Abhishek Kumar](https://www.linkedin.com/in/abhishek-kumar-21731123a/), Ikramul Hasan, Deepika Bhagat
 
 ---
 
@@ -29,9 +43,18 @@ crawls the public web to fill the gap before answering again.
         risk rules                       clean → chunk → embed
         LLM composes Top-N               upsert Neo4j → re-run Mode A
 ```
+**My Contribution:** Mode B 
 
-Mode B is the part that makes this adaptive: low confidence triggers self-expansion
-of the knowledge base instead of a "no results" answer.
+    Mode B is the part that makes this adaptive: low confidence triggers self-expansion
+    of the knowledge base instead of a "no results" answer.
+    
+    When the knowledge graph did not have enough evidence for a question, I built the system that searches the public web, crawls useful pages then ingests that data into Neo4j, and asks the question again from the updated data.
+    
+    1.  Owned the adaptive OSINT loop: if Graph-RAG found fewer than 10 strong evidence chunks (score ≥ 0.80), the system searched the web, crawled pages, ingested them into Neo4j, then answered again from the updated graph.
+    2.  Built search → filter → crawl: SearXNG / DuckDuckGo / Google CSE fallbacks, trust ranking for gov/press sites, drop social links, Scrapy or httpx + trafilatura extraction, robots.txt + rate limits, 10–15 URLs per query.
+    3.  Built crawl-job tracking in Neo4j (no Redis): stages search → crawl → ingest → embed, with FastAPI background tasks and frontend polling, so Mode A re-runs only after ingest finishes.
+    4.  Wired the Ask API (POST /api/ask + /api/osint/*): confidence gate, admin-only discover, and the re-ask path after OSINT completes.
+    Stack: FastAPI, Neo4j, Scrapy, trafilatura, SearXNG, Voyage AI, Groq (Llama 3.3), Next.js (job polling), ingestion.
 
 ## Stack
 
